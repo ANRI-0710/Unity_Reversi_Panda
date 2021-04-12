@@ -100,16 +100,22 @@ public class Enemy_AI : MonoBehaviour
         return rerult;
     }
 
-
+    /// <summary>
+    /// ミニマックス引数のリストの中で最も評価値の高いリストを返す
+    /// </summary>
+    /// <param name="stones"></param>
+    /// <param name="nowturn"></param>
+    /// <param name="depth"></param>
+    /// <param name="i"></param>
+    /// <param name="field"></param>
+    /// <returns></returns>
     private int Minimax(StoneColor[,] stones, E_StoneState nowturn, int depth, TurnStonePos i, Field[,] field)
     {     
-        /* 葉の場合、評価値を返す */
+        //深さ制限
         if (depth == 0) return ScoreCount.Eva_Score[i.Get_Stone_Pos_z(),i.Get_Stone_Pos_x()];
-
-        /* 現在の局面から1手進めた状態をa1,a2,a3・・akとする */
-        //expand_node(node, 次の turn);
+        
+        //現在のGridの状態をコピーする
         StoneColor[,] stonecolors = new StoneColor[8, 8];
-
         for (var h = 0; h < 8; h++)
         {
             for (var j = 0; j < 8; j++)
@@ -152,6 +158,7 @@ public class Enemy_AI : MonoBehaviour
 
         }
 
+       //コピーして検証したあとはDestroyする
         for (var h = 0; h < 8; h++)
         {
             for (var j = 0; j < 8; j++)
